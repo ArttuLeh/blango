@@ -104,7 +104,7 @@ class Dev(Configuration):
           'NAME': BASE_DIR / 'db.sqlite3',
       }
   }"""
-  # DATABASES = values.DatabaseURLValue(f"sqlite:///{BASE_DIR}/db.sqlite3")
+  
 
   # Password validation
   # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -124,6 +124,12 @@ class Dev(Configuration):
       },
   ]
 
+  """PASSWORD_HASHERS = [
+    'django.contrib.auth.hashers.Argon2PasswordHasher',
+    'django.contrib.auth.hashers.PBKDF2PasswordHasher',
+    'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
+    'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',
+  ]"""
 
   # Internationalization
   # https://docs.djangoproject.com/en/3.2/topics/i18n/
