@@ -60,6 +60,7 @@ class Dev(Configuration):
     "allauth.socialaccount",
     "allauth.socialaccount.providers.google",
     "rest_framework",
+    'rest_framework.authtoken',
   ]
 
   MIDDLEWARE = [
@@ -205,6 +206,14 @@ class Dev(Configuration):
     },
   }
 
+  REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework.authentication.BasicAuthentication",
+        "rest_framework.authentication.SessionAuthentication",
+        "rest_framework.authentication.TokenAuthentication",
+    ]
+  }
+
   INTERNAL_IPS = ["192.168.10.156"]
   AUTH_USER_MODEL = "blango_auth.User"
   EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
@@ -214,6 +223,7 @@ class Dev(Configuration):
   ACCOUNT_EMAIL_REQUIRED = True
   ACCOUNT_USERNAME_REQUIRED = False
   ACCOUNT_AUTHENTICATION_METHOD = "email"
+
 
 class Prod(Dev):
   DEBUG = False
