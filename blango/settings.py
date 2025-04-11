@@ -227,13 +227,6 @@ class Dev(Configuration):
   ACCOUNT_USERNAME_REQUIRED = False
   ACCOUNT_AUTHENTICATION_METHOD = "email"
 
-  SWAGGER_SETTINGS = {
-        "SECURITY_DEFINITIONS": {
-            "Token": {"type": "apiKey", "name": "Authorization", "in": "header"},
-            "Basic": {"type": "basic"},
-        }
-    }
-
 
 class Prod(Dev):
   DEBUG = False
