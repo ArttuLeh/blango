@@ -76,19 +76,19 @@ class Dev(Configuration):
   ROOT_URLCONF = 'blango.urls'
 
   TEMPLATES = [
-      {
-          'BACKEND': 'django.template.backends.django.DjangoTemplates',
-          'DIRS': [BASE_DIR / 'templates'],
-          'APP_DIRS': True,
-          'OPTIONS': {
-              'context_processors': [
-                  'django.template.context_processors.debug',
-                  'django.template.context_processors.request',
-                  'django.contrib.auth.context_processors.auth',
-                  'django.contrib.messages.context_processors.messages',
-              ],
-          },
+    {
+      'BACKEND': 'django.template.backends.django.DjangoTemplates',
+      'DIRS': [BASE_DIR / 'templates'],
+      'APP_DIRS': True,
+      'OPTIONS': {
+        'context_processors': [
+          'django.template.context_processors.debug',
+          'django.template.context_processors.request',
+          'django.contrib.auth.context_processors.auth',
+          'django.contrib.messages.context_processors.messages',
+        ],
       },
+    },
   ]
 
   WSGI_APPLICATION = 'blango.wsgi.application'
@@ -102,16 +102,16 @@ class Dev(Configuration):
   DATABASES = {
     "default": dj_database_url.config(default=f"sqlite:///{BASE_DIR}/db.sqlite3"),
     "alternative": dj_database_url.config(
-        "ALTERNATIVE_DATABASE_URL",
-        default=f"sqlite:///{BASE_DIR}/alternative_db.sqlite3",
+      "ALTERNATIVE_DATABASE_URL",
+      default=f"sqlite:///{BASE_DIR}/alternative_db.sqlite3",
     ),
   }
 
   """DATABASES = {
-      'default': {
-          'ENGINE': 'django.db.backends.sqlite3',
-          'NAME': BASE_DIR / 'db.sqlite3',
-      }
+    'default': {
+      'ENGINE': 'django.db.backends.sqlite3',
+      'NAME': BASE_DIR / 'db.sqlite3',
+    }
   }"""
   
 
@@ -119,18 +119,18 @@ class Dev(Configuration):
   # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
 
   AUTH_PASSWORD_VALIDATORS = [
-      {
-          'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-      },
-      {
-          'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-      },
-      {
-          'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-      },
-      {
-          'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-      },
+    {
+      'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+    },
+    {
+      'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+    },
+    {
+      'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+    },
+    {
+      'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+    },
   ]
 
   """PASSWORD_HASHERS = [
@@ -170,50 +170,62 @@ class Dev(Configuration):
     "version": 1,
     "disable_existing_loggers": False,
     "filters": {
-        "require_debug_false": {
-            "()": "django.utils.log.RequireDebugFalse",
-        },
+      "require_debug_false": {
+        "()": "django.utils.log.RequireDebugFalse",
+      },
     },
     "formatters": {
-        "verbose": {
-            "format": "{levelname} {asctime} {module} {process:d} {thread:d} {message}",
-            "style": "{",
-        },
+      "verbose": {
+        "format": "{levelname} {asctime} {module} {process:d} {thread:d} {message}",
+        "style": "{",
+      },
     },
     "handlers": {
-        "console": {
-            "class": "logging.StreamHandler",
-            "stream": "ext://sys.stdout",
-            "formatter": "verbose",
-        },
-        "mail_admins": {
-            "level": "ERROR",
-            "class": "django.utils.log.AdminEmailHandler",
-            "filters": ["require_debug_false"],
-        },
-    },
+      "console": {
+        "class": "logging.StreamHandler",
+        "stream": "ext://sys.stdout",
+        "formatter": "verbose",
+      },
+      "mail_admins": {
+        "level": "ERROR",
+        "class": "django.utils.log.AdminEmailHandler",
+        "filters": ["require_debug_false"],
+      },
+    },                            
     "loggers": {
-        "django.request": {
-            "handlers": ["mail_admins"],
-            "level": "ERROR",
-            "propagate": True,
-        },
+      "django.request": {
+        "handlers": ["mail_admins"],
+        "level": "ERROR",
+        "propagate": True,
+      },
     },
     "root": {
-        "handlers": ["console"],
-        "level": "DEBUG",
+      "handlers": ["console"],
+      "level": "DEBUG",
     },
   }
 
   REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": [
-        "rest_framework.authentication.BasicAuthentication",
-        "rest_framework.authentication.SessionAuthentication",
-        "rest_framework.authentication.TokenAuthentication",
+      "rest_framework.authentication.BasicAuthentication",
+      "rest_framework.authentication.SessionAuthentication",
+      "rest_framework.authentication.TokenAuthentication",
     ],
     "DEFAULT_PERMISSION_CLASSES": [
       "rest_framework.permissions.IsAuthenticatedOrReadOnly"
     ],
+    "DEFAULT_THROTTLE_CLASSES": [
+      "blog.api.throttling.AnonSustainedThrottle",
+      "blog.api.throttling.AnonBurstThrottle",
+      "blog.api.throttling.UserSustainedThrottle",
+      "blog.api.throttling.UserBurstThrottle",
+    ],
+    "DEFAULT_THROTTLE_RATES": {
+      "anon_sustained": "500/day",
+      "anon_burst": "10/minute",
+      "user_sustained": "5000/day",
+      "user_burst": "100/minute",
+    },
   }
 
   INTERNAL_IPS = ["192.168.10.156"]
